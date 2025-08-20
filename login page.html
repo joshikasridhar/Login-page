@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Education Engineering College</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('cdb91389-982c-4ddb-abbd-6fd48d41f5be.png') no-repeat center center/cover;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 400px;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .form-group label {
+      flex: 1;
+      text-align: left;
+      font-weight: bold;
+    }
+    .form-group input, 
+    .form-group select {
+      flex: 2;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin: 8px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #4a90e2;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #357abd;
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: #4a90e2;
+      color: white;
+    }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #4a90e2;
+      padding: 10px 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+    .navbar h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .menu {
+      position: relative;
+      display: inline-block;
+    }
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .menu-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background: white;
+      min-width: 120px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      z-index: 1;
+    }
+    .menu-content a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: black;
+    }
+    .menu-content a:hover {
+      background: #f0f0f0;
+    }
+    .menu:hover .menu-content {
+      display: block;
+    }
+    /* Spacing below navbar */
+    .content {
+      margin-top: 70px;
+    }
+    /* History Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      font-size: 18px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN CARD -->
+  <div id="loginCard" class="card">
+    <h2>Education Engineering College</h2>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input id="username" type="text" placeholder="Enter username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input id="password" type="password" placeholder="Enter password">
+    </div>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- STUDENT FORM -->
+  <div id="formPage" style="display:none; width:100%;">
+    <!-- Navbar -->
+    <div class="navbar">
+      <h2>Education Engineering College</h2>
+      <div class="menu">
+        <span class="menu-icon">☰</span>
+        <div class="menu-content">
+          <a href="#" onclick="goHome()">Home</a>
+          <a href="#" onclick="openHistory()">History</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="card" style="margin:auto; max-width:500px;">
+        <h3>STUDENT FORM</h3>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input id="name" type="text">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender">
+            <option value="">--Select--</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input id="age" type="number" min="1" max="100">
+        </div>
+        <div>
+          <button onclick="saveData()">Submit</button>
+          <button onclick="clearForm()">Clear</button>
+        </div>
+
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Modal -->
+  <div id="historyModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeHistory()">✖</span>
+      <h3>📜 History of Entries</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+  let count = 1;
+  let editRowIndex = -1;
+
+  // LOGIN
+  function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user === "admin" && pass === "1234") {
+      document.getElementById("loginCard").style.display = "none";
+      document.getElementById("formPage").style.display = "block";
+      loadFromLocal();
+    } else {
+      alert("Invalid login! Try again (Hint: admin / 1234)");
+    }
+  }
+
+  function logout() {
+    document.getElementById("formPage").style.display = "none";
+    document.getElementById("loginCard").style.display = "block";
+  }
+
+  function goHome() {
+    alert("🏠 Home Page - You are already on the Student Form.");
+  }
+
+  // SAVE DATA + LOCAL STORAGE
+  function saveData() {
+    let name = document.getElementById("name").value;
+    let gender = document.getElementById("gender").value;
+    let age = document.getElementById("age").value;
+
+    if (name === "" || gender === "" || age === "") {
+      alert("Please fill all fields");
+      return;
+    }
+
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    students.push({name, gender, age}); // Keep all entries for history
+
+    localStorage.setItem("students", JSON.stringify(students));
+    loadFromLocal();
+    clearForm();
+  }
+
+  // LOAD DATA (current table)
+  function loadFromLocal() {
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    let table = document.getElementById("tableBody");
+    table.innerHTML = "";
+    count = 1;
+
+    students.forEach((student, i) => {
+      let newRow = table.insertRow();
+      newRow.insertCell(0).innerText = count++;
+      newRow.insertCell(1).innerText = student.name;
+      newRow.insertCell(2).innerText = student.gender;
+      newRow.insertCell(3).innerText = student.age;
+
+      let actionCell = newRow.insertCell(4);
+      actionCell.innerHTML = 
+        `<button onclick="editRow(${i})">Edit</button> 
+         <button onclick="deleteRow(${i})">Delete</button>`;
+    });
+  }
+
+  function editRow(index) {
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    let student = students[index];
+    document.getElementById("name").value = student.name;
+    document.getElementById("gender").value = student.gender;
+    document.getElementById("age").value = student.age;
+    editRowIndex = index;
+  }
+
+  function deleteRow(index) {
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    students.splice(index, 1);
+    localStorage.setItem("students", JSON.stringify(students));
+    loadFromLocal();
+  }
+
+  function clearForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("gender").value = "";
+    document.getElementById("age").value = "";
+  }
+
+  // HISTORY MODAL
+  function openHistory() {
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    let historyBody = document.getElementById("historyBody");
+    historyBody.innerHTML = "";
+    let hCount = 1;
+
+    students.forEach(student => {
+      let row = historyBody.insertRow();
+      row.insertCell(0).innerText = hCount++;
+      row.insertCell(1).innerText = student.name;
+      row.insertCell(2).innerText = student.gender;
+      row.insertCell(3).innerText = student.age;
+    });
+
+    document.getElementById("historyModal").style.display = "flex";
+  }
+
+  function closeHistory() {
+    document.getElementById("historyModal").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
